@@ -40,13 +40,13 @@ export function Dashboard() {
     if (timeframe === 'Today') {
       start = startOfDay(today);
       end = endOfDay(today);
-      // For a single day, we'll just have one bucket
-      buckets = [{
-        name: format(today, 'MMM d'),
-        key: format(today, 'yyyy-MM-dd'),
-        Transport: 0, Electricity: 0, Food: 0, Other: 0
-      }];
+      buckets = [
+        { name: ' ', key: 'padding-start', Transport: 0, Electricity: 0, Food: 0, Other: 0 },
+        { name: format(today, 'MMM d'), key: format(today, 'yyyy-MM-dd'), Transport: 0, Electricity: 0, Food: 0, Other: 0 },
+        { name: '  ', key: 'padding-end', Transport: 0, Electricity: 0, Food: 0, Other: 0 }
+      ];
       getBucketKey = (d) => format(d, 'yyyy-MM-dd');
+
 
     } else if (timeframe === 'This Week') {
       start = startOfWeek(today, { weekStartsOn: 1 });
