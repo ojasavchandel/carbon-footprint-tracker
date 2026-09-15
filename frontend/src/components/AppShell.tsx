@@ -3,7 +3,6 @@ import { NavLink } from 'react-router-dom';
 import { Sun } from 'lucide-react';
 import { ActivityModal } from './ActivityModal';
 import { useCarbon } from '../context/CarbonContext';
-import { getCurrentWeekActivities } from '../utils/week';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
@@ -13,9 +12,7 @@ export function cn(...inputs: ClassValue[]) {
 
 export function AppShell({ children }: { children: React.ReactNode }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { activities } = useCarbon();
-
-  const weekActivities = getCurrentWeekActivities(activities);
+  useCarbon();
 
   return (
     <div className="min-h-screen flex text-sm">
