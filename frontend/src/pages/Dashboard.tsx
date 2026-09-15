@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { useCarbon } from '../context/CarbonContext';
 import { getCategory } from '../utils/emissions';
-import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
+import { AreaChart, Area, XAxis, ResponsiveContainer } from 'recharts';
 import { Edit2, ArrowRight, Sun, Calendar } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { 

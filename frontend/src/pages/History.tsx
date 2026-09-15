@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import { useCarbon } from '../context/CarbonContext';
 import { format, isWithinInterval, startOfDay, endOfDay, startOfWeek, endOfWeek } from 'date-fns';
 import { ACTIVITY_TYPES } from '../utils/emissions';

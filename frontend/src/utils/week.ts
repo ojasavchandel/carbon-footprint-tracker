@@ -1,4 +1,4 @@
-import { startOfWeek, endOfWeek, isWithinInterval, parseISO } from 'date-fns';
+import { startOfWeek, endOfWeek, isWithinInterval } from 'date-fns';
 import type { Activity } from '../types';
 
 export function getCurrentWeekActivities(activities: Activity[]): Activity[] {

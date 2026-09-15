@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
-import { Sun, Target, Bell } from 'lucide-react';
+import { NavLink } from 'react-router-dom';
+import { Sun } from 'lucide-react';
 import { ActivityModal } from './ActivityModal';
 import { useCarbon } from '../context/CarbonContext';
 import { getCurrentWeekActivities } from '../utils/week';
@@ -13,11 +13,9 @@ export function cn(...inputs: ClassValue[]) {
 
 export function AppShell({ children }: { children: React.ReactNode }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const location = useLocation();
-  const { activities, settings } = useCarbon();
+  const { activities } = useCarbon();
 
   const weekActivities = getCurrentWeekActivities(activities);
-  const weeklyCo2 = weekActivities.reduce((sum, act) => sum + act.co2_kg, 0);
 
   return (
     <div className="min-h-screen flex text-sm">

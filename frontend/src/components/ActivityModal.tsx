@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { X, AlertTriangle } from 'lucide-react';
 import { ACTIVITY_TYPES, getUnit, calculateCO2 } from '../utils/emissions';
 import { useCarbon } from '../context/CarbonContext';
-import { cn } from './AppShell';
 
 interface ActivityModalProps {
   isOpen: boolean;
