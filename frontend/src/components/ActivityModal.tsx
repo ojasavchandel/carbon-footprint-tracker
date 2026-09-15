@@ -66,7 +66,7 @@ export function ActivityModal({ isOpen, onClose }: ActivityModalProps) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
-      <div className="bg-surface rounded-2xl shadow-xl w-full max-w-md overflow-hidden flex flex-col max-h-[90vh]">
+      <div className="bg-[#F2EFE9] rounded-2xl shadow-xl w-full max-w-md overflow-hidden flex flex-col max-h-[90vh]">
         <div className="flex items-center justify-between p-4 border-b border-gray-100">
           <h2 className="text-lg font-semibold">Log activity</h2>
           <button onClick={onClose} className="p-2 hover:bg-gray-100 rounded-full transition-colors">

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
-import { Leaf, Plus, Target } from 'lucide-react';
+import { Sun, Target, Bell } from 'lucide-react';
 import { ActivityModal } from './ActivityModal';
 import { useCarbon } from '../context/CarbonContext';
 import { getCurrentWeekActivities } from '../utils/week';
@@ -20,78 +20,57 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   const weeklyCo2 = weekActivities.reduce((sum, act) => sum + act.co2_kg, 0);
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <header className="bg-surface border-b border-gray-200 sticky top-0 z-40">
-        <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-8">
-            <div className="flex items-center gap-2 text-primary font-bold text-lg">
-              <Leaf className="w-6 h-6" />
-              <span>CarbonTrack</span>
-            </div>
-            
-            <nav className="hidden md:flex items-center gap-1">
-              <NavLink 
-                to="/dashboard"
-                className={({ isActive }) => cn(
-                  "px-3 py-2 rounded-md text-sm font-medium transition-colors",
-                  isActive ? "bg-gray-100 text-primary" : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
-                )}
-              >
-                Overview
-              </NavLink>
-              <NavLink 
-                to="/history"
-                className={({ isActive }) => cn(
-                  "px-3 py-2 rounded-md text-sm font-medium transition-colors",
-                  isActive ? "bg-gray-100 text-primary" : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
-                )}
-              >
-                History
-              </NavLink>
-            </nav>
+    <div className="min-h-screen flex text-sm">
+      {/* Sidebar */}
+      <aside className="w-64 border-r border-[#DCD6CD] flex flex-col justify-between fixed h-screen top-0 left-0 bg-[#F2EFE9] z-40">
+        <div>
+          <div className="p-8">
+            <Sun className="w-8 h-8 text-black stroke-[1.5]" />
           </div>
-
-          <div className="flex items-center gap-4">
-            <div className="hidden sm:flex items-center gap-2 text-sm text-gray-600 px-3 py-1.5 bg-gray-50 rounded-full border border-gray-100">
-              <Target className="w-4 h-4 text-secondary" />
-              <span>{weeklyCo2.toFixed(1)} / {settings?.weekly_target_kg || 50} kg CO₂</span>
-            </div>
-            <button
-              onClick={() => setIsModalOpen(true)}
-              className="flex items-center gap-1 bg-primary text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-primary/90 transition-colors shadow-sm"
+          
+          <nav className="flex flex-col mt-4">
+            <NavLink 
+              to="/dashboard"
+              className={({ isActive }) => cn(
+                "px-8 py-3 transition-colors",
+                isActive ? "bg-[#E6E1D6] font-medium" : "text-gray-600 hover:bg-[#EAE5DA]"
+              )}
             >
-              <Plus className="w-4 h-4" />
-              <span className="hidden sm:inline">Log activity</span>
-              <span className="sm:hidden">Log</span>
+              Your Footprint
+            </NavLink>
+            <NavLink 
+              to="/history"
+              className={({ isActive }) => cn(
+                "px-8 py-3 transition-colors",
+                isActive ? "bg-[#E6E1D6] font-medium" : "text-gray-600 hover:bg-[#EAE5DA]"
+              )}
+            >
+              Activity History
+            </NavLink>
+            
+            <button 
+              onClick={() => setIsModalOpen(true)}
+              className="mt-6 mx-8 px-4 py-2 bg-black text-white rounded font-medium text-center hover:bg-black/90 transition-colors"
+            >
+              + Log Activity
             </button>
-          </div>
+          </nav>
         </div>
-        
-        {/* Mobile Nav */}
-        <div className="md:hidden flex px-4 pb-2 gap-2">
-          <NavLink 
-            to="/dashboard"
-            className={({ isActive }) => cn(
-              "px-3 py-1.5 rounded-md text-sm font-medium transition-colors",
-              isActive ? "bg-gray-100 text-primary" : "text-gray-600 hover:bg-gray-50"
-            )}
-          >
-            Overview
-          </NavLink>
-          <NavLink 
-            to="/history"
-            className={({ isActive }) => cn(
-              "px-3 py-1.5 rounded-md text-sm font-medium transition-colors",
-              isActive ? "bg-gray-100 text-primary" : "text-gray-600 hover:bg-gray-50"
-            )}
-          >
-            History
-          </NavLink>
-        </div>
-      </header>
 
-      <main className="flex-1 max-w-6xl w-full mx-auto p-4 md:p-6 lg:p-8">
-        {children}
+        <div className="p-8 flex items-center gap-3 border-t border-[#DCD6CD]/50">
+          <div className="w-8 h-8 bg-black rounded-full flex items-center justify-center text-white text-xs font-serif font-bold">
+            O
+          </div>
+          <span className="font-medium text-gray-900">Ojasav Chandel</span>
+        </div>
+      </aside>
+
+      {/* Main Content */}
+      <main className="ml-64 flex-1">
+        {/* Top subtle header just for mobile/extra info if needed, but the design shows a clean top */}
+        <div className="max-w-[1200px] p-10 xl:p-16">
+          {children}
+        </div>
       </main>
 
       <ActivityModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
