@@ -1,6 +1,6 @@
 import type { Activity, Settings } from '../types';
 
-const API_BASE = import.meta.env.VITE_API_URL || 'https://carbon-footprint-tracker-0fmy.onrender.com/api';
+const API_BASE = 'https://carbon-footprint-tracker-0fmy.onrender.com/api';
 
 export const api = {
   getActivities: async (): Promise<Activity[]> => {
