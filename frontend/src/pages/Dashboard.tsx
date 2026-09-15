@@ -6,7 +6,7 @@ import { Edit2, ArrowRight, Sun, Calendar } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { 
   startOfWeek, endOfWeek, subMonths, startOfMonth, endOfMonth, 
-  subYears, startOfYear, endOfYear, isWithinInterval, format, eachDayOfInterval, eachMonthOfInterval, eachWeekOfInterval, parseISO 
+  subYears, startOfYear, endOfYear, isWithinInterval, format, eachDayOfInterval, eachMonthOfInterval, eachWeekOfInterval, parseISO, startOfDay, endOfDay
 } from 'date-fns';
 
 const CATEGORY_COLORS: Record<string, string> = {
@@ -16,7 +16,7 @@ const CATEGORY_COLORS: Record<string, string> = {
   Other: '#7C9B8E'
 };
 
-type Timeframe = 'This Week' | 'Last Month' | 'Last Year' | 'Custom';
+type Timeframe = 'Today' | 'This Week' | 'Last Month' | 'Last Year' | 'Custom';
 
 export function Dashboard() {
   const { activities, settings, updateTarget, loading } = useCarbon();
@@ -37,7 +37,18 @@ export function Dashboard() {
     let buckets: any[] = [];
     let getBucketKey: (d: Date) => string;
 
-    if (timeframe === 'This Week') {
+    if (timeframe === 'Today') {
+      start = startOfDay(today);
+      end = endOfDay(today);
+      // For a single day, we'll just have one bucket
+      buckets = [{
+        name: format(today, 'MMM d'),
+        key: format(today, 'yyyy-MM-dd'),
+        Transport: 0, Electricity: 0, Food: 0, Other: 0
+      }];
+      getBucketKey = (d) => format(d, 'yyyy-MM-dd');
+
+    } else if (timeframe === 'This Week') {
       start = startOfWeek(today, { weekStartsOn: 1 });
       end = endOfWeek(today, { weekStartsOn: 1 });
       buckets = eachDayOfInterval({ start, end }).map(d => ({
@@ -72,7 +83,6 @@ export function Dashboard() {
     } else { // Custom
       start = customStart ? parseISO(customStart) : startOfWeek(today, { weekStartsOn: 1 });
       end = customEnd ? parseISO(customEnd) : endOfWeek(today, { weekStartsOn: 1 });
-      // To prevent massive arrays if they select 10 years, group by month if > 60 days
       const durationDays = (end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24);
       
       if (durationDays > 60) {
@@ -116,10 +126,6 @@ export function Dashboard() {
 
   const totalCo2 = filteredActivities.reduce((sum, act) => sum + act.co2_kg, 0);
 
-  // We only use target/progress logic explicitly for "This Week" because the target is weekly.
-  // But for UI, let's keep showing the weekly target progress comparing the "current week" total.
-  // The user prompt said: "Weekly target... The dashboard should show Current weekly footprint, Target, Remaining amount".
-  // So the bottom card MUST always show the weekly progress, regardless of the chart filter above.
   const weekActivities = useMemo(() => {
     const start = startOfWeek(new Date(), { weekStartsOn: 1 });
     const end = endOfWeek(new Date(), { weekStartsOn: 1 });
@@ -159,6 +165,7 @@ export function Dashboard() {
           <button onClick={() => setTimeframe('Last Year')} className={btnClass(timeframe === 'Last Year')}>Last Year</button>
           <button onClick={() => setTimeframe('Last Month')} className={btnClass(timeframe === 'Last Month')}>Last Month</button>
           <button onClick={() => setTimeframe('This Week')} className={btnClass(timeframe === 'This Week')}>This Week</button>
+          <button onClick={() => setTimeframe('Today')} className={btnClass(timeframe === 'Today')}>Today</button>
           
           <div className="flex items-center gap-1 border-l border-[#DCD6CD] pl-2 ml-1">
             <button onClick={() => setTimeframe('Custom')} className={btnClass(timeframe === 'Custom')}>Custom</button>
