@@ -84,6 +84,4 @@ Interactive API docs (Swagger UI) are available at `http://localhost:8000/docs` 
 
 No standard external API was provided by the challenge environment. As a result, a custom REST API (FastAPI) was built to power this application completely, ensuring robust data persistence and satisfying all criteria. 
 
-## Hackathon ID
 
-AZIS-7CJHDT
