@@ -4,7 +4,8 @@ AZIS-7CJHDT
 
 ## Website live link
 
-https://frontend-cjgod6jqa-chandelojasav-stars-projects.vercel.app
+https://frontend-one-omega-bxwbi5c4m9.vercel.app
+
 
 # CarbonTrack
 
